@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "02a37bd4-c462-47c2-bfd3-0c6a8c8374a7": {
+      "ProjectGuid": "02a37bd4-c462-47c2-bfd3-0c6a8c8374a7",
+      "DisplayName": "TestProject",
+      "ColorIndex": 0
+    },
+    "c5d7b083-3627-41be-81cc-6e119bd7e612": {
+      "ProjectGuid": "c5d7b083-3627-41be-81cc-6e119bd7e612",
+      "DisplayName": "Covid19",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Archivos varios",
+      "ColorIndex": -1
+    },
+    "2a406804-8ee2-420a-b155-f317ec87821b": {
+      "ProjectGuid": "2a406804-8ee2-420a-b155-f317ec87821b",
+      "DisplayName": "Covid19",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}

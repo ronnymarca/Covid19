@@ -1,0 +1,110 @@
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model X.PagedList.IPagedList<Covid19.Models.ViewModels.DataViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    @foreach (var item in Model)
+    {
+        <div class="card-header">
+            <div class="row">
+                <div class="row w-50">
+                    <form asp-controller="Home" asp-action="Index" method="GET">
+                        <div class="input-group">
+                            <select class="form-select" name="iso">
+                                @foreach (var reg in item.regiones.datos)
+                                {
+                                    if(ViewBag.iso!=string.Empty && ViewBag.iso == reg.iso){
+                                        <option value="@reg.iso" selected>@reg.name</option>
+                                    }else{
+                                        <option value="@reg.iso">@reg.name</option>
+                                    }
+                                } 
+                            </select>
+                            <button id="reporte" class="btn btn-primary" type="submit">Reporte</button>
+                        </div>                        
+                    </form>
+                    <!--<div class="col-md-6">
+                        <button class="btn btn-primary" type="submit">Reporte</button>
+                    </div>-->
+                </div>
+                <div class="row w-50 align-items-center">
+                    <div class="d-flex justify-content-end">
+                        <div class="btn-group align-items-center" role="group" aria-label="Basic example">
+                            <a asp-action="ReporteXml" asp-controller="Home" class="btn btn-primary">XML</a>
+                            <a asp-action="ReporteJson" asp-controller="Home" class="btn btn-primary">JSON</a>
+                            <a asp-action="ReporteCsv" asp-controller="Home" class="btn btn-primary">CSV</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+             @if (!ViewBag.carga)
+            { 
+                <table id="ftb" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <!--<th scope="col">#</th>-->
+                            <th scope="col">Region</th>
+                            <th scope="col">Casos</th>
+                            <th scope="col">Muertos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="regiontd">
+                        @foreach (var itemre in item.Reporteregiones.dt)
+                        {
+                            <tr>
+                                <td>@itemre.regions.name</td>
+                                <td>@itemre.confirmed.ToString("#,##0.##")</td>
+                                <td>@itemre.deaths.ToString("#,##0.##")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+             }    
+            @if (ViewBag.carga)
+            {
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <!--<th scope="col">#</th>-->
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Casos</th>
+                            <th scope="col">Muertos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var itemre in item.Reporteprovincias.dt)
+                        {
+                            if (itemre.regions.province!=string.Empty)
+                            {
+                                <tr>
+                                    <td>@itemre.regions.province</td>
+                                    <td>@itemre.confirmed.ToString("#,##0.##")</td>
+                                    <td>@itemre.deaths.ToString("#,##0.##")</td>
+                                </tr>
+                            }else
+                            {
+                                 <tr>
+                                    <td>@itemre.regions.name</td>
+                                    <td>@itemre.confirmed.ToString("#,##0.##")</td>
+                                    <td>@itemre.deaths.ToString("#,##0.##")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    }
+</div>
+@* Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber ) de  @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index","Home",new { Page = page}),new PagedListRenderOptions {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+    }) *@
